@@ -1,0 +1,155 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.inventariointento3;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+/**
+ *
+ * @author Adolfo G
+ */
+public class Inventariointento3 {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Producto> inventario = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+
+        boolean salir = false;
+        while (!salir) {
+            System.out.println("---------------");
+            System.out.println("1. Agregar producto");
+            System.out.println("2. Actualizar inventario");
+            System.out.println("3. Buscar producto");
+            System.out.println("4. Mostrar inventario");
+            System.out.println("5. Salir");
+            System.out.println("---------------");
+            System.out.print("Ingrese una opción: ");
+            int opcion = scanner.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    agregarProducto(inventario);
+                    break;
+                case 2:
+                    actualizarInventario(inventario);
+                    break;
+                case 3:
+                    buscarProducto(inventario);
+                    break;
+                case 4:
+                    mostrarInventario(inventario);
+                    break;
+                case 5:
+                    salir = true;
+                    break;
+                default:
+                    System.out.println("Opción inválida. Intente nuevamente.");
+            }
+        }
+    }
+    
+    public static void agregarProducto(ArrayList<Producto> inventario) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Ingrese el nombre del producto: ");
+        String nombre = scanner.nextLine();
+        System.out.print("Ingrese el precio del producto: ");
+        double precio = scanner.nextDouble();
+        System.out.print("Ingrese la cantidad: ");
+        int stock = scanner.nextInt();
+        
+        Producto producto = new Producto(nombre, precio, stock);
+        inventario.add(producto);
+        
+        System.out.println("Producto agregado a la lista.");
+    }
+    
+    public static void actualizarInventario(ArrayList<Producto> inventario) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Ingrese el nombre del producto a cambiar: ");
+        String nombre = scanner.nextLine();
+        
+        boolean encontrado = false;
+        for (Producto producto : inventario) {
+            if (producto.getNombre().equalsIgnoreCase(nombre)) {
+                System.out.print("Ingrese la nueva cantidad: ");
+                int stock = scanner.nextInt();
+                producto.setStock(stock);
+                encontrado = true;
+                break;
+            }
+        }
+        
+        if (!encontrado) {
+            System.out.println("Producto no encontrado.");
+        } else {
+            System.out.println("Inventario actualizado.");
+        }
+    }
+    
+    public static void buscarProducto(ArrayList<Producto> inventario) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Ingrese el nombre del producto a buscar: ");
+        String nombre = scanner.nextLine();
+        
+        boolean encontrado = false;
+        for (Producto producto : inventario) {
+            if (producto.getNombre().equalsIgnoreCase(nombre)) {
+                System.out.println("Nombre: " + producto.getNombre());
+                System.out.println("Precio: $" + producto.getPrecio());
+                System.out.println("Cantidad en stock: " + producto.getStock());
+                encontrado = true;
+                break;
+            }
+        }
+        
+        if (!encontrado) {
+            System.out.println("Producto no encontrado.");
+        }
+    }
+    
+    public static void mostrarInventario(ArrayList<Producto> inventario) {
+        System.out.println("Inventario actual:");
+        for (Producto producto : inventario) {
+            System.out.println("Nombre: " + producto.getNombre());
+            System.out.println("Precio: $" + producto.getPrecio());
+            System.out.println("Cantidad en stock: " + producto.getStock());
+            System.out.println("--------------");
+        }
+    }
+}
+
+class Producto {
+    private String nombre;
+    private double precio;
+    private int stock;
+    
+    public Producto(String nombre, double precio, int stock) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.stock = stock;
+    }
+    
+    public String getNombre() {
+        return nombre;
+    }
+    
+    public double getPrecio() {
+        return precio;
+    }
+    
+    public int getStock() {
+        return stock;
+    }
+    
+    public void setStock(int stock) {
+        this.stock = stock;
+    
+    }
+}
